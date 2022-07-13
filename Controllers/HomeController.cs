@@ -21,14 +21,14 @@ namespace E_Store.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Our application is for  ASP.net Project.";
+            ViewBag.Message = "Our application is a ASP.NET web app Project.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "not legal.";
+            ViewBag.Message = "lorum posum";
 
             return View();
         }
