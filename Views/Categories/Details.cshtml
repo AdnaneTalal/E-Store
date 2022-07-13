@@ -1,0 +1,34 @@
+﻿@model E_Store.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Category</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            <strong><em>@Html.DisplayNameFor(model => model.Name)</em></strong>
+</dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            <strong><em> @Html.DisplayNameFor(model => model.Image)</em></strong>
+        </dt>
+
+        <dd>
+            <img src="~/image/cat/@Html.DisplayFor(model => model.Image)"  width="200" height="200"/>    
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-success fa fa-edit" }) 
+    @Html.ActionLink("Back to List", "Index", new { }, htmlAttributes: new { @class = "btn btn-success  fa fa-rotate-left" })   
+</p>

@@ -1,0 +1,127 @@
+﻿@using E_Store.Models;
+
+@model IEnumerable<E_Store.Models.Cartitem>
+
+<title>ViewCart</title>
+<link rel="stylesheet" href="~/Content/cart.css">
+
+<div class="container " style=" font-family: sans-serif; font-size: 0.8rem; font-weight: bold">
+    <div class="row">
+        <div class="col align-self-center">
+            @if (ViewBag.cpt !=0 && Session["Cart"] != null )
+            {
+                <div class="card bg-dark text-dark mt-5  ">
+                    <div class="row">
+                        <div class="col-md-8 cart">
+                            @if (ViewData["Cart"] != null)
+                            {
+
+                                <div class="title">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h4><b>Shopping Cart</b></h4>
+                                        </div>
+
+                                        <div class="col align-self-center text-right text-md-center"> ITEMS @ViewBag.cpt :</div>
+                                    </div>
+                                </div>
+
+                                foreach (Cartitem item in ViewData["Cart"] as List<Cartitem>)
+                                {
+
+                                    <div class="row border-top border-bottom">
+                                        <div class="row main align-items-center">
+                                            <div class="col-2"><img class="img-fluid" src="~/image/products/@item.Product.Image"></div>
+                                            <div class="col">
+                                                <div class="row text-muted">@item.Product.Category.Name</div>
+                                                <div class="row">@item.Product.Name </div>
+                                            </div>
+                                            <div class="col">
+                                                <a href="#" style="text-decoration:none;">
+
+                                                    (@item.Quantity)<span class="text-muted"> unites </span>
+                                                </a>     @using (Html.BeginForm("AddToCart", "Home", new { ID_P = item.Product.ID }, FormMethod.Post))
+                                                {
+                                                    <button type="submit" class="pull-right"><i class="fa fa-plus-square"></i></button>
+                                                }
+                                                @using (Html.BeginForm("RemoveFromCart", "Home", new { ID_P = item.Product.ID }, FormMethod.Post))
+                                                {
+                                                    <button type="submit" class="pull-right btn-danger"><i class="fa fa-minus-square"></i></button>
+                                                }
+                                            </div>
+                                            <div class="col">&euro; @item.Product.Price <span class="close">&#10005;</span></div>
+                                        </div>
+                                    </div>
+
+                                }
+
+                            }
+
+
+                            <div class="back-to-shop ">
+                                @Html.ActionLink("Back to Shop", "Index", "Home", new { area = "" }, new { @class = "btn btn-info fa fa-arrow-left" })
+                            </div>
+                        </div>
+                        <div class="col-md-4 summary">
+                            <div>
+                                <h5><b>Summary</b></h5>
+                            </div>
+                            <hr>
+
+                            @foreach (Cartitem item in ViewData["Cart"] as List<Cartitem>)
+                            {
+                                <div class="row row-cols-2 border-top border-bottom">
+
+                                    <div class="col" style="padding-left:0;">@item.Product.Name </div>
+                                    <div class="col text-right">&euro;  @(@item.Product.Price*@item.Quantity)</div>
+
+                                </div>
+                                <hr>
+                            }
+
+
+
+
+
+                            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                                <div class="col">TOTAL PRICE</div>
+                                <div class="col text-right">&euro; @ViewBag.total</div>
+                            </div> <button class="btn btn-dark">CHECKOUT</button>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (ViewBag.cpt == 0 || Session["Cart"] == null)
+            {
+
+                <div class="card bg-dark text-dark mt-5  ">
+                    <div class="row">
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+
+                                <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                </symbol>
+                            </svg>
+
+                            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+                                <div>
+                                    @ViewBag.Message  
+                                    @Html.ActionLink("Back to Shop", "Index", "Home", new { area = "" }, new { @class = "Alert-link  fa fa-arrow-left" })
+                                </div>
+
+                                 
+                            
+                            </div>
+                        
+                    </div>
+                </div>
+
+            }
+        </div>
+                    </div>
+                </div>
+
+
+

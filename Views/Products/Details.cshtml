@@ -1,0 +1,83 @@
+﻿@model E_Store.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <div class="card p-3  py-4 body-background bg-dark  row-cols-2">
+        <dl class="dl-horizontal ">
+            <div class="col-md-10  ">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Category.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Category.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
+            </div>
+            <div class="col-md-10  ">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Image)
+                </dt>
+
+                <dd>
+                    <img width="200" height="200" src="~/image/products/@Html.DisplayFor(model => model.Image)">
+
+                </dd>
+                <dd>
+                    @if (Model.Quantity > 0)
+                    {
+                        using (Html.BeginForm("AddToCart", "Home", new { ID_P = Model.ID }, FormMethod.Post))
+
+                        {
+                            <button type="submit" class="w-50"><i class="fa fa-shopping-cart"></i></button>
+                        }
+                        <p style="color: #198754" ;>Available</p>
+
+                    }
+                    else
+                    {
+                        <p style="color:#FF0000" ;>NOT Available</p>
+
+                    }
+                </dd>
+            </div>
+
+        </dl>
+     
+
+    </div>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-success fa fa-edit" })
+        @Html.ActionLink("Back to List", "Index", new { }, htmlAttributes: new { @class = "btn btn-success  fa fa-rotate-left" })
+    </p>

@@ -1,0 +1,150 @@
+﻿@using E_Store.Models;
+<!DOCTYPE html>
+<html>
+<head>
+
+    @Styles.Render("~/Content/fontawesome")
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mon application ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+
+        .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+        }
+    </style>
+
+</head>
+
+<body class="bg-dark">
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-black ">
+            <div class="container-fluid">
+
+                <img src="~/image/es-1.svg" alt="" width="40" height="40" class="d-inline-block align-text-top">
+                @Html.ActionLink("E-Store", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            @Html.ActionLink("Accueil", "Index", "Home", new { area = "" }, new { @class = "nav-link active" })
+                        </li>
+
+                        <li class="nav-item">
+                            @Html.ActionLink("Products", "Index", "Products", new { area = "" }, new { @class = "nav-link" })
+                        </li>
+                        <li class="nav-item">
+
+                            @Html.ActionLink("Categories", "Index", "Categories", new { area = "" }, new { @class = "nav-link" })
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+                                More
+                            </a>
+                            <ul class="dropdown-menu bg-black" aria-labelledby="navbarDropdown">
+
+                                <li>
+                                    @Html.ActionLink("À propos de", "About", "Home", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+
+
+                        <li class="nav-item ">
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        </li>
+
+                        <li class="nav-item  justify-content-end">
+                            @using (Html.BeginForm("Index", "Products", FormMethod.Post, htmlAttributes: new { @class = "d-flex" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input class="form-control " type="search" placeholder="Search" aria-label="Search" name="search">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            }
+                        </li>
+ 
+
+                    </ul>
+             
+                   
+                            |
+                            <ul Class="navbar-nav justify-content-end">
+                                <li class="nav-item dropdown ">
+                                    <a class="nav-link dropdown-toggle fa fa-shopping-cart bg-success" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+                                        Cart
+                                    </a>
+
+                                    <ul class="dropdown-menu dropdown-menu-dark"  aria-labelledby="navbarDropdown">
+
+                                        @if (Session["cart"] != null)
+                                                    {
+
+                                                        var count = 0;
+                                                        foreach (Cartitem item in (List<Cartitem>)Session["cart"])
+                                                        {
+                                                
+                                                <li ><a href="#" class="dropdown-item">@item.Product.Name (@item.Quantity)</a></li>
+                                                count++;
+                                            }
+                                        }
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            @Html.ActionLink("Show Cart", "ViewCart", "Home", new { area = "" }, new { @class = "dropdown-item active" })
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <span class="navbar-text">
+                                @Html.Partial("_LoginPartial")
+                            </span>
+
+
+
+                        </div>
+</div>
+
+        </nav>
+    </header>
+    <main class="text-light bg-dark">
+
+        <div class="container bg-dark text-light" style=" margin-top: 40px ">
+
+
+            @RenderBody()
+            <hr style="margin-top:100px" />
+            <footer class="fixed">
+                <div class="container">
+                    <p>&copy; @DateTime.Now.Year - Mon application ASP.NET</p>
+                </div>
+            </footer>
+        </div>
+    </main>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

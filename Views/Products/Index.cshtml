@@ -1,0 +1,57 @@
+﻿@model IEnumerable<E_Store.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<h2>PRODUCTS</h2>
+@if (User.IsInRole("ADMIN"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create", new { }, htmlAttributes: new { @class = "fa fa-plus  btn btn-outline-success" })
+    </p>
+}
+    <div class="row row-cols-3 justify-content-center align-items-center">
+        @foreach (var item in Model)
+        {
+            <div class="card bg-dark" style="width: 19rem;">
+                <img class="card-img-top img-circle" src="~/image/products/@Html.DisplayFor(modelItem => item.Image)" width=200 height="200" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Category.Name)</h5>
+                    <p class="card-text">Category Name:@Html.DisplayFor(modelItem => item.Name)</p>
+                    <p class="card-text">Description:@Html.DisplayFor(modelItem => item.Description)</p>
+                    <p class="card-text">Price:@Html.DisplayFor(modelItem => item.Price) $</p>
+                    @if (User.IsInRole("ADMIN"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }, htmlAttributes: new { @class = "btn btn-warning fa fa-edit" })
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }, htmlAttributes: new { @class = "btn btn-info fa fa-info-circle" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }, htmlAttributes: new { @class = "btn btn-danger fa fa-times-circle" })
+                    }
+
+
+                    @if (item.Quantity > 0)
+                    {
+                        using (Html.BeginForm("AddToCart", "Home", new { ID_P = item.ID }, FormMethod.Post))
+
+                        {
+                            <button type="submit" class="pull-right"><i class="fa fa-shopping-cart"></i></button>
+                        }
+                        <p style="color: #198754" ;>Available</p>
+
+                    }
+                    else
+                    {
+                        <p style="color:#FF0000" ;>NOT Available</p>
+
+                    }
+
+
+
+                </div>
+            </div>
+        }
+    </div>
+
+
+
